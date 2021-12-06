@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/guciano/3-recipesAPI/models"
+	"recipes-3API/models"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -107,14 +107,14 @@ func (handler *RecipesHandler) UpdateRecipeHandler(c *gin.Context) {
 			"error": err.Error()})
 		return
 	}
+	
 	objectId, _ := primitive.ObjectIDFromHex(id)
 	_, err := handler.collection.UpdateOne(handler.ctx, bson.M{
 		"_id": objectId,
-	}, bson.D{{"$set", bson.D {
-		{"name", recipe.Name},
-		{"instructions", recipe.Instructions},
-		{"ingredients", recipe.Ingredients},
-		{"tags", recipe.Tags},
+	}, bson.D{{Key: "$set", Value: bson.D {{Key: "name", Value: recipe.Name},
+		{Key: "instructions", Value: recipe.Instructions},
+		{Key: "ingredients", Value: recipe.Ingredients},
+		{Key: "tags", Value: recipe.Tags},
 	}}})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError,
