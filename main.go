@@ -21,7 +21,7 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
-	handlers "3-RecipesAPI/handlers"
+	handlers "github.com/guciano/3-RecipesAPI/handlers"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"

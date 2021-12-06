@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/guciano/3-recipesAPI/models"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
