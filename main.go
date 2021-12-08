@@ -21,10 +21,10 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
-	handlers "recipes-3API/handlers"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
+	handlers "recipes-3API/handlers"
 )
 
 /*Each recipe should have a name, a list of ingredients, a list of instructions or steps,
@@ -40,16 +40,16 @@ var recipesHandler *handlers.RecipesHandler
 func init() {
 	ctx := context.Background()
 	client, err := mongo.Connect(ctx,
-		options.Client().ApplyURI("mongodb://adminMongo:sembarang@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false"))
+		options.Client().ApplyURI("mongodb://adminMongo:sembarang@localhost:27017/DEMO_DATABASE?authSource=admin&compressors=disabled&gssapiServiceName=mongodb"))
 	if err = client.Ping(context.TODO(),
-			readpref.Primary()) ; err != nil {
-				log.Fatal(err)
-			}
-			log.Println("Terkoneksi ke MongoDB")
-			
-			collection := client.Database("DEMO_DATABASE").Collection("recipes")
-			recipesHandler = handlers.NewRecipesHandler(ctx, collection)
-			
+		readpref.Primary()); err != nil {
+		log.Fatal(err)
+	}
+	log.Println("Terkoneksi ke MongoDB")
+
+	collection := client.Database("DEMO_DATABASE").Collection("recipes")
+	recipesHandler = handlers.NewRecipesHandler(ctx, collection)
+
 }
 
 func main() {
