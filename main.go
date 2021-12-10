@@ -17,6 +17,7 @@
 package main
 
 import (
+	"fmt"
 	"context"
 	"log"
 
@@ -25,6 +26,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 	handlers "recipes-3API/handlers"
+	"github.com/go-redis/redis"
 )
 
 /*Each recipe should have a name, a list of ingredients, a list of instructions or steps,
@@ -48,8 +50,16 @@ func init() {
 	log.Println("Terkoneksi ke MongoDB")
 
 	collection := client.Database("DEMO_DATABASE").Collection("recipes")
-	recipesHandler = handlers.NewRecipesHandler(ctx, collection)
 
+	redisClient := redis.NewClient(&redis.Options{
+		Addr: "localhost:6379",
+		Password: "",
+		DB: 0,
+	})
+
+	status:= redisClient.Ping()
+	fmt.Println(status)
+	recipesHandler = handlers.NewRecipesHandler(ctx, collection, redisClient)
 }
 
 func main() {
